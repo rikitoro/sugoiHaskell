@@ -22,3 +22,28 @@ landRight n (left, right)
 
 banana :: Pole -> Maybe Pole
 banana _ = Nothing
+
+routine :: Maybe Pole
+routine = do
+  start <- return (0,0)
+  first <- landLeft 2 start
+  second <- landRight 2 first
+  landLeft 1 second
+
+routine' :: Maybe Pole
+routine' = do
+  start <- return (0,0)
+  first <- landLeft 2 start
+  Nothing
+  second <- landRight 2 first
+  landLeft 1 second
+
+justH :: Maybe Char
+justH = do
+  (x:xs) <- Just "Hello"
+  return x
+
+wopwop :: Maybe Char
+wopwop = do
+  (x:xs) <- Just ""
+  return x
