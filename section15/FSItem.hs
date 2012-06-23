@@ -43,3 +43,14 @@ fsTo name (Folder folderName items, bs) =
 nameIs :: Name -> FSItem -> Bool
 nameIs name (Folder folderName _) = name == folderName
 nameIs name (File fileName _) = name == fileName
+
+(-:) :: a -> (a -> b) -> b
+f -: g = g f
+
+fsRename :: Name -> FSZipper -> FSZipper
+fsRename newName (Folder name items, bs) = (Folder newName items, bs)
+fsRename newName (File name dat, bs) = (File newName dat, bs)
+
+fsNewFile :: FSItem -> FSZipper -> FSZipper
+fsNewFile item (Folder folderName items, bs) =
+    (Folder folderName (item:items), bs)
