@@ -1,3 +1,5 @@
+module Recursive where
+
 maximum' :: (Ord a) => [a] -> a
 maximum' [] = error "maximun of empty list!"
 maximum' [x] = x
