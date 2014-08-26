@@ -1,0 +1,2 @@
+すごいHaskell楽しく学ぼうの写経
+test framework: Hspec
