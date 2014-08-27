@@ -59,7 +59,7 @@ main = hspec $ do
       chain 20 `shouldBe` [20,10,5,16,8,4,2,1]
 
   describe "numLongChains" $ do
-   it "コラッツ列長が15より大きくなる数が1から100まででいくつあるかを求める" $ do
+   it "コラッツ列長が15より大きくなる数が1から100まででいくつあるかをもとめる" $ do
     numLongChains `shouldBe` 66 
 
 
