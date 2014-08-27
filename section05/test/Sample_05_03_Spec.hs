@@ -57,10 +57,10 @@ main = hspec $ do
   describe "chain" $ do
     it "20を渡すとコラッツ列[20,10,5,16,8,4,2,1]を返す" $ do
       chain 20 `shouldBe` [20,10,5,16,8,4,2,1]
-    it "1から100までのコラッツ列を作り、列長が15より大きい物をとりだし、列の数をカウントする" $ do
-      let isLong xs = length xs > 15 
-      (length $ filter isLong $ map chain [1..100]) `shouldBe` 66
- 
+
+  describe "numLongChains" $ do
+   it "コラッツ列長が15より大きくなる数が1から100まででいくつあるかを求める" $ do
+    numLongChains `shouldBe` 66 
 
 
 
