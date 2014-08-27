@@ -50,9 +50,9 @@ main = hspec $ do
     it "(/=' ')と文字列を渡すとスペースで区切られた元の単語を返す" $ do
       takeWhile (/=' ') "elepahts know how to party" `shouldBe` "elepahts"
     it "sum, filter, mapと組み合わせて10000より小さいすべての奇数の平方数の和を求める" $ do
-      (sum $ takeWhile (<10000) $ filter odd $ map (^2) [1..]) `shouldBe` 166650
+      (sum . takeWhile (<10000) . filter odd $ map (^2) [1..]) `shouldBe` 166650
     it "等価なリスト内包表記と比較する" $ do
-      (sum $ takeWhile (<10000) $ [x| x <- [n^2 | n <- [1..]], odd x]) `shouldBe` 166650
+      (sum . takeWhile (<10000) $ [x| x <- [n^2 | n <- [1..]], odd x]) `shouldBe` 166650
 
   describe "chain" $ do
     it "20を渡すとコラッツ列[20,10,5,16,8,4,2,1]を返す" $ do
