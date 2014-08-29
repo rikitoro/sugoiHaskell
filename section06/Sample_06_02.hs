@@ -1,3 +1,5 @@
+module Sample_06_02 where
+
 import Data.List
 import Data.Char
 import qualified Data.Map as Map
