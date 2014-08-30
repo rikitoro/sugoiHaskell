@@ -28,3 +28,25 @@ main = hspec $ do
   describe "decode" $ do
     it "encodeと同じoffsetでデコードすると元の文字列に戻る" $ do
       (decode 10 . encode 10 $ "gloval society piyo") `shouldBe` "gloval society piyo"
+
+  describe "foldl" $ do
+    it "(+),0, replicate 10000000 1 を渡すと10000000を返すはず" $ do
+      pending
+      -- foldl (+) 0 (replicate 100000000 1) `shouldBe` 100000000
+
+  describe "foldl'" $ do
+    it "(+), 0, replicate 10000000, 1を渡すと10000000を返す" $ do
+      foldl' (+) 0 (replicate 10000000 1) `shouldBe` 10000000
+
+  describe "digitSum" $ do
+    it "数を渡すと書く桁の数の合計を返す" $ do
+      digitSum 1234567890 `shouldBe` 45
+
+  describe "firstTo40" $ do
+    it "各桁の合計が40になる最初の自然数を返す" $ do
+      firstTo40 `shouldBe` Just 49999
+
+  describe "firstTo" $ do
+    it "数を渡すと、各桁の合計がその数になる最初の自然数を返す" $ do
+      firstTo 27 `shouldBe` Just 999
+
