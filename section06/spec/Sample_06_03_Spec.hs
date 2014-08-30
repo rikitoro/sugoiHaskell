@@ -59,3 +59,10 @@ main = hspec $ do
   describe "phoneBookToMap'" $ do
     it "連想リストの各キーに対する値をリストにしてMapに変換する" $ do
       (Map.lookup "bonnie" $ phoneBookToMap' phoneBook'') `shouldBe` Just ["000-0000","452-2928"]
+
+  describe "Map.fromListWith" $ do
+    let list = [(2,3),(2,5),(2,100),(3,22),(3,29),(3,11),(4,22),(4,15)]
+    it "番号の連想リストから各キーに対する値の最大値を保持するMapを作る" $ do
+      Map.fromListWith max list `shouldBe` Map.fromList [(2,100), (3,29), (4,22)]
+    it "同じキーの値を足し合わせてMapを作る" $ do
+      Map.fromListWith (+) list `shouldBe` Map.fromList [(2,108), (3,62), (4,37)]
