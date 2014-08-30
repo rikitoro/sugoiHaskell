@@ -1,6 +1,8 @@
+module Sample_07_02_1 where
+
 data Shape = Circle Float Float Float |
              Rectangle Float Float Float Float
-             deriving (Show)
+             deriving (Show, Eq)
 
 area :: Shape -> Float
 area (Circle _ _ r) = pi * r ^ 2
