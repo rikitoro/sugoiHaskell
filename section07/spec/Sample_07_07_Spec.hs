@@ -24,3 +24,17 @@ main = hspec $ do
       let a = 3 :-: 4 :-: 5 :-: Empty'
       let b = 6 :-: 7 :-: Empty'
       a ^++ b `shouldBe` 3 :-: 4 :-: 5 :-: 6 :-: 7 :-: Empty'
+
+  describe "Tree" $ do
+    let nums = [8, 6, 4, 1, 7, 3, 5]
+    let numsTree = foldr treeInsert EmptyTree nums
+    it "show numsTree" $ do
+      show numsTree 
+        `shouldBe` "Node 5 "
+          ++ "(Node 3 (Node 1 EmptyTree EmptyTree) (Node 4 EmptyTree EmptyTree)) "
+          ++ "(Node 7 (Node 6 EmptyTree EmptyTree) (Node 8 EmptyTree EmptyTree))"
+    describe "treeElem" $ do
+      it "要素が木に含まれるときはTrueを返す" $ do
+        6 `treeElem` numsTree `shouldBe` True
+      it "要素が木に含まれないときはFalseを返す" $ do
+        10 `treeElem` numsTree `shouldBe` False
