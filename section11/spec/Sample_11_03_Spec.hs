@@ -42,3 +42,25 @@ main = hspec $ do
           `shouldBe` [ x*y | x <- xs, y <- ys]
       it "filterと組み合わせて使う" $ do
         (filter (>50) $ (*) <$> [2,5,10] <*> [8,10,11]) `shouldBe` [55,80,100,110]
+    describe "関数もアプリカティブ" $ do
+      it "pureに値を渡すとその値を返す関数を返す" $ do
+        pure 3 "blah" `shouldBe` 3
+      it "(+) <$> (+3) <*> (*100)" $ do
+        ((+) <$> (+3) <*> (*100) $ 5) `shouldBe` 508
+      it "(\\x y z -> [x, y, z]) <$> (+3) <*> (*2) <*> (/2)" $ do
+        ((\x y z -> [x, y, z]) <$> (+3) <*> (*2) <*> (/2) $ 5) `shouldBe`
+          [8, 10, 2.5]
+    describe "Zipリスト" $ do
+      it "(+) <$> に有限のZipListを2つ渡す" $ do
+        (getZipList $ (+) <$> ZipList [1,2,3] <*> ZipList [100,100,100]) `shouldBe`
+          [101,102,103]
+      it "(+) <$> に有限のZipListと無限長のZipListを渡す" $ do  
+        (getZipList $ (+) <$> ZipList [1,2,3] <*> ZipList [100,100..]) `shouldBe`
+          [101,102,103]
+      it "max <$>" $ do
+        (getZipList $ max <$> ZipList [1,2,3,4,5,3] <*> ZipList [5,3,1,2]) `shouldBe`
+          [5,3,3,4]
+      it "(,,) <$>" $ do
+        (getZipList $ (,,) <$> ZipList "dog" <*> ZipList "cat" <*> ZipList "rat") `shouldBe`
+          [('d','c','r'),('o','a','a'),('g','t','t')]       
+
