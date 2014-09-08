@@ -1,9 +1,11 @@
-module Sample_12_03 where
+module Sample_12_03_Spec where
 
 import Test.Hspec
 import Test.QuickCheck
 
 import Data.Monoid
+
+import Sample_12_03
 
 main = hspec $ do
   describe "リストはモノイド" $ do
@@ -62,3 +64,32 @@ main = hspec $ do
         mempty `mappend` LT `shouldBe` LT
       it "memptyとGTを渡すとLTを返す" $ do
         mempty `mappend` GT `shouldBe` GT
+  describe "lengthCompare" $ do
+    it "文字列の長さを比較する" $ do
+      lengthCompare "zen" "ants" `shouldBe` LT
+    it "文字列の長さが同じ時は辞書順で比較する" $ do
+      lengthCompare "zen" "ant" `shouldBe` GT
+
+  describe "lengthCompare1" $ do
+    it "文字列の長さを比較する" $ do
+      lengthCompare1 "zen" "ants" `shouldBe` LT
+    it "文字列の長さが同じ時は母音の数を比較する" $ do
+      lengthCompare1 "zen" "ana" `shouldBe` LT
+    it "母音の数も等しい場合は辞書順を比較する" $ do
+      lengthCompare1 "zen" "ann" `shouldBe` GT
+
+  describe "Maybe Monoid" $ do
+    describe "mappend" $ do
+      it "NothingとJust値を渡すとJust値を返す" $ do
+        Nothing `mappend` Just "andy" `shouldBe` Just "andy"
+      it "Just値同士を渡すとJustの中身をmappendしてJustに包んで返す" $ do
+        Just (Sum 3) `mappend` Just (Sum 4) `shouldBe` Just (Sum 7)
+
+  describe "First Monoid" $ do
+    it "最初に現れるJust値を取得できる" $ do
+      (getFirst . mconcat . map First $ [Nothing, Nothing, Just 9, Just 10, Nothing]) `shouldBe`
+        Just 9
+    describe "Last Monoid" $ do
+    it "最後に現れるJust値を取得できる" $ do
+      (getLast . mconcat . map Last $ [Nothing, Nothing, Just 9, Just 10, Nothing]) `shouldBe`
+        Just 10
