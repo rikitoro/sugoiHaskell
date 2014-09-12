@@ -2,6 +2,7 @@ module Sample_13_06_Spec where
 
 import Test.Hspec
 import Control.Applicative
+import Control.Monad
 import Sample_13_06
 
 main = hspec $ do
@@ -25,3 +26,25 @@ main = hspec $ do
           `shouldBe` listOfTuples
       it "等価なリスト内包表記" $ do
         listOfTuples `shouldBe` [(n, ch) | n <- [1, 2], ch <- ['a', 'b']]
+  describe "guard" $ do
+    it "リスト内包表記で出力する要素を選別できる" $ do
+      [x | x <- [1..50], '7' `elem` show x ] `shouldBe` [7, 17, 27, 37, 47]
+    it "Maybeモナドの文脈ではTrueを渡すとJust ()を返す" $ do
+      guard (5 > 2) `shouldBe` Just ()
+    it "リストモナドの文脈ではTrueを渡すと[()]を返す" $do
+      guard (5 > 2) `shouldBe` [()]
+    it "Maybeモナドの文脈ではFalseを渡すとNothingを返す" $ do
+      guard (2 > 5) `shouldBe` Nothing
+    it "リストモナドの文脈ではTrueを渡すと[]を返す" $do
+      guard (2 > 5) `shouldBe` []
+    it "Trueを渡して>>につなぐと計算を続ける" $ do
+      (guard (5 > 2) >> return "cool") `shouldBe` ["cool"]
+    it "Falseを渡して>>につなぐと計算に失敗する" $ do
+      (guard (1 > 2) >> return "cool") `shouldBe` []
+    it "guardで解の候補を選別できる" $ do
+      ([1..50] >>= (\x -> guard ('7' `elem` show x) >> return x))
+        `shouldBe` [7, 17, 27, 37, 47]
+    it "等価なdo記法" $ do
+      sevensOnly `shouldBe` [7, 17, 27, 37, 47]
+
+
