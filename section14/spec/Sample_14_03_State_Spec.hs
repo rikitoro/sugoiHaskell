@@ -21,3 +21,10 @@ main = hspec $ do
       runState moreStack [100, 5, 0, 2] `shouldBe` ((), [5, 0, 2])
     it "stackManipを使った結果が100でないならなにもしない" $ do
       runState moreStack [101, 4, 0, 2] `shouldBe` ((), [4, 0, 2])
+  describe "stackyStack" $ do
+    it "[1,2,3]を渡すと[8,3,1]にして返す" $ do
+      runState stackyStack [1,2,3] `shouldBe` ((),[8,3,1])
+    it "[1,2,3]でなければ[9,2,1]にして返す" $ do
+      runState stackyStack [1,1,2,3] `shouldBe` ((),[9,2,1])
+
+
