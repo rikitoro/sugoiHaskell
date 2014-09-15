@@ -43,5 +43,18 @@ main = hspec $ do
     it "State値のState値を平らにする" $ do
       runState (join (state $ \s -> (push 10, 1:2:s))) [0,0,0]
         `shouldBe` ((),[10,1,2,0,0,0])
-
-
+  describe "filterM" $ do
+    it "モナディックな述語関数とリストを渡すと述語関数でフィルタリングする" $ do
+      (fst $ runWriter $ filterM keepSmall [9,1,5,2,10,3]) 
+        `shouldBe` [1,2,3]
+    it "モナディックな述語関数とリストを渡すと述語関数でフィルタリングしたログを返す" $ do
+      (snd $ runWriter $ filterM keepSmall [9,1,5,2,10,3]) 
+        `shouldBe` ["9 is too large", "Keeping 1", "5 is too large", "Keeping 2", "10 is too large", "Keeping 3"]
+  describe "powerset" $ do
+    it "リストを渡すと冪集合を返す" $ do
+      powerset [1,2,3] `shouldBe` [[1,2,3],[1,2],[1,3],[1],[2,3],[2],[3],[]]
+  describe "binSmalls" $ do
+    it "foldMで9以下の数からなるリストをbinSmallsでたたみ込むと総和をJust値として返す" $ do
+      foldM binSmalls 0 [2,8,3,1] `shouldBe` Just 14
+    it "foldMで9より大きなの数があるリストをbinSmallsでたたみ込むとNothingを返す" $ do
+      foldM binSmalls 0 [2,8,11,3,1] `shouldBe` Nothing
