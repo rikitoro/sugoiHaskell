@@ -29,3 +29,19 @@ main = hspec $ do
       join (Just Nothing) `shouldBe` (Nothing :: Maybe String)
     it "Nothingはそのまま" $ do
       join Nothing `shouldBe` (Nothing :: Maybe String)
+    it "ListのListを平らにする" $ do
+      join [[1,2,3],[4,5,6]] `shouldBe` [1,2,3,4,5,6]
+    it "Writer値のWriter値を平らにする" $ do
+      (runWriter $ join (writer (writer (1, "aaa"), "bbb")))
+        `shouldBe` (1, "bbbaaa")
+    it "Right値のRight値を平らにする" $ do
+      (join (Right (Right 9)) :: Either String Int) `shouldBe` Right 9
+    it "Left値のRight値を平らにする" $ do 
+      (join (Right (Left "error")) :: Either String Int) `shouldBe` Left "error"
+    it "Left値はそのまま" $ do
+      (join (Left "error") :: Either String Int) `shouldBe` Left "error"
+    it "State値のState値を平らにする" $ do
+      runState (join (state $ \s -> (push 10, 1:2:s))) [0,0,0]
+        `shouldBe` ((),[10,1,2,0,0,0])
+
+
