@@ -15,3 +15,8 @@ main = hspec $ do
     it "モナディク関数を合成して新たなモナディック関数を構成する" $ do
       let g = (\x -> return (x+1)) <=< (\x -> return (x*100))
       (Just 4 >>= g) `shouldBe` Just 401
+  describe "canReachIn" $ do
+    it "(6,2)から(6,1)へは3手で行くことができる" $ do
+      canReachIn 3 (6,2) (6,1) `shouldBe` True
+    it "(6,2)から(7,3)へは3手で行くことはできない" $ do
+      canReachIn 3 (6,2) (7,3) `shouldBe` False
