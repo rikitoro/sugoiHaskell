@@ -1,30 +1,32 @@
+module FSItem where
+
 import Data.List (break)
 
 type Name = String
 type Data = String
-data FSItem = File Name Data | Folder Name [FSItem] deriving (Show)
+data FSItem = File Name Data | Folder Name [FSItem] deriving (Show, Eq)
 
 myDisk :: FSItem
 myDisk =
-    Folder "root"
-               [ File "goat.wav" "baaaaaaaaaaaaaaaaaaaaaa"
-               , File "Pope.avi" "god bless"
-               , Folder "pics"
-                        [ File "ape.jpg" "bleargh"
-                        , File "watermelon.gif" "smash"
-                        , File "skell.bpm" "Yikes"
-                        ]
-               , File "dijon.doc" "best mustard"
-               , Folder "programs"
-                        [ File "far.exe" "10gotofart"
-                        , File "owl.dmg" "mov eax h00t"
-                        , File "not_a_virus.exe" "really not a virus"
-                        , Folder "source_code" 
-                                     [ File "best.hs" "main = print (fix error)"
-                                     , File "random.hs" "ain = print 4"
-                                     ]
-                        ]
-               ]
+  Folder "root"
+    [ File "goat.wav" "baaaaaaaaaaaaaaaaaaaaaa"
+    , File "Pope.avi" "god bless"
+    , Folder "pics"
+      [ File "ape.jpg" "bleargh"
+      , File "watermelon.gif" "smash"
+      , File "skull.bpm" "Yikes"
+      ]
+    , File "dijon.doc" "best mustard"
+    , Folder "programs"
+      [ File "far.exe" "10gotofart"
+      , File "owl.dmg" "mov eax h00t"
+      , File "not_a_virus.exe" "really not a virus"
+      , Folder "source_code" 
+        [ File "best.hs" "main = print (fix error)"
+        , File "random.hs" "ain = print 4"
+        ]
+      ]
+    ]
 
 
 
