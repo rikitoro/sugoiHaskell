@@ -1,7 +1,7 @@
 module Tree where
 
 
-data Tree a = Empty | Node a (Tree a) (Tree a) deriving Show
+data Tree a = Empty | Node a (Tree a) (Tree a) deriving (Show, Eq)
 
 freeTree :: Tree Char
 freeTree =
@@ -27,7 +27,7 @@ freeTree =
       )
     )
 
-data Direction = L | R deriving Show
+data Direction = L | R deriving (Show, Eq)
 type Directions = [Direction]
 
 changeToP :: Directions -> Tree Char -> Tree Char
